@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name         A Mining Game: Fix minor issues
 // @namespace    https://github.com/Phylogenesis/
-// @version      0.1.2
+// @version      0.1.3
 // @description  Fixes some minor issues with the chat system and allows manual saving by clicking on the button in the top right
 // @author       Luke Jones
-// @include      /http://trugul\.com/(index\.php)?/
+// @include      /^http://trugul\.com/(index\.php)?$/
 // @grant        none
 // @downloadURL  https://github.com/Phylogenesis/greasemonkey/raw/master/AMGFixes.user.js
 // ==/UserScript==
