@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         A Mining Game: Fix minor issues
 // @namespace    https://github.com/Phylogenesis/
-// @version      0.1.3
+// @version      0.1.4
 // @description  Fixes some minor issues with the chat system and allows manual saving by clicking on the button in the top right
 // @author       Luke Jones
 // @include      /^http://trugul\.com/(index\.php)?$/
@@ -22,9 +22,9 @@
                 function () {
                     if ($('div.chat-room-message-container:visible').length > 0) {
                         $('div.chat-room-message-container').scrollTop($('div.chat-room-message-container')[0].scrollHeight);
-                        $('body').css('margin-bottom', $('div.popout').outerHeight() + 'px');
+                        $('body').css('padding-bottom', ($('div.popout').outerHeight() + 50) + 'px');
                     } else {
-                        $('body').css('margin-bottom', 0);
+                        $('body').css('padding-bottom', '50px');
                     }
                 },
                 100
