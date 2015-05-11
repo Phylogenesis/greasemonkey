@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name         A Mining Game: GBStats Bot
 // @namespace    https://github.com/Phylogenesis/
-// @version      0.1.2
+// @version      0.1.3
 // @description  Runs a bot that tracks global boss stats in A Mining Game
 // @author       Luke Jones
-// @match        http://trugul.com/index.php
+// @include      /^http://trugul\.com/(index\.php)?$/
 // @grant        none
 // @downloadURL  https://github.com/Phylogenesis/greasemonkey/raw/master/GBStats.user.js
 // ==/UserScript==
