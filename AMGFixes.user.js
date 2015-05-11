@@ -6,6 +6,7 @@
 // @author       Luke Jones
 // @match        http://trugul.com/index.php
 // @grant        none
+// @downloadURL  https://github.com/Phylogenesis/greasemonkey/AMGFixes.user.js
 // ==/UserScript==
 
 (function ($) {
