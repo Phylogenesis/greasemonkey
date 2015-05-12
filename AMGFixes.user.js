@@ -94,18 +94,24 @@
             }
         );
         
-        $('#quickdetails tr').prepend('<td id="leaderboardRanking" class="displaytext2"><b>Ranking</b><br><span class="mainRank">&hellip;</span><span class="prestigeRank">&hellip;</span></td>');
+        $('#quickdetails tr').prepend('<td id="leaderboardRanking" class="displaytext2"><b>Ranking</b><span class="mainRank">&hellip;</span><span class="prestigeRank">&hellip;</span></td>');
         
         $('#leaderboardRanking').css({
             textAlign: 'center',
             padding:   0
         });
         
+        $('#leaderboardRanking b').css({
+            display:      'block',
+            borderBottom: '1px solid white',
+            lineHeight:   '18px'
+        });
+        
         $('#leaderboardRanking span').css({
             display:    'inline-block',
             width:      '50px',
             cursor:     'pointer',
-            lineHeight: '22px'
+            lineHeight: '19px'
         });
         
         $('span.mainRank').css({
