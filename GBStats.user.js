@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         A Mining Game: GBStats Bot
 // @namespace    https://github.com/Phylogenesis/
-// @version      0.1.3
+// @version      0.1.4
 // @description  Runs a bot that tracks global boss stats in A Mining Game
 // @author       Luke Jones
 // @include      /^http://trugul\.com/(index\.php)?$/
@@ -162,12 +162,12 @@ GBStats = {
     },
     
     parseMessage: function (data) {
-        if (/^#gbstats/.test(data.message)) {
+        if (/^#gbstats/i.test(data.message)) {
             var requester = data.username;
             var command   = data.message.split(' ')[1];
             var list = data.message.split(' ')[2];
 
-            switch (command) {
+            switch (command.toLowerCase()) {
                 case "summary":
                     if (requester === 'Phylogenesis') {
                         GBStats.outputSummary(true);
@@ -179,7 +179,7 @@ GBStats = {
                     }
                     break;
                 case "subscribe":
-                    switch (list) {
+                    switch (list.toLowerCase()) {
                         case 'personal':
                         case 'summary':
                             GBStats.addSubscriber(list, requester);
@@ -190,7 +190,7 @@ GBStats = {
                     }
                     break;
                 case "unsubscribe":
-                    switch (list) {
+                    switch (list.toLowerCase()) {
                         case 'personal':
                         case 'summary':
                             GBStats.removeSubscriber(list, requester);
