@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         A Mining Game: GBStats Bot
 // @namespace    https://github.com/Phylogenesis/
-// @version      0.1.5
+// @version      0.1.6
 // @description  Runs a bot that tracks global boss stats in A Mining Game
 // @author       Luke Jones
 // @include      /^http://trugul\.com/(index\.php)?$/
@@ -10,6 +10,10 @@
 // ==/UserScript==
 
 GBStats = {
+    // How many global bosses to track.
+    // Maximum limit depends on the browser's localStorage settings
+    MAX_HISTORY:  1000,      
+    
     client:       undefined,
     
     globalBosses: [],
@@ -234,7 +238,7 @@ GBStats = {
     },
     
     updateGlobalBosses: function () {
-        localStorage.GBStatsGlobalBosses = JSON.stringify(GBStats.globalBosses.slice(Math.max(0, GBStats.globalBosses.length - 10)));
+        localStorage.GBStatsGlobalBosses = JSON.stringify(GBStats.globalBosses.slice(-GBStats.MAX_HISTORY));
     },
     
     loadSubscriberList: function () {
