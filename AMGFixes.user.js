@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         A Mining Game: Fix minor issues
 // @namespace    https://github.com/Phylogenesis/
-// @version      0.2.4
+// @version      0.2.5
 // @description  Fixes some minor issues with the chat system and allows manual saving by clicking on the button in the top right
 // @author       Luke Jones
 // @include      /^http://trugul\.com/(index\.php)?$/
@@ -94,7 +94,7 @@
             }
         );
         
-        $('#quickdetails tr').prepend('<td id="leaderboardRanking" class="displaytext2"><b>Ranking</b><span class="mainRank">&hellip;</span><span class="prestigeRank">&hellip;</span></td>');
+        $('#quickdetails tr').prepend('<td id="leaderboardRanking" class="displaytext2"><b>Ranking</b><span class="mainRank" data-order="Money">&hellip;</span><span class="prestigeRank" data-order="Prestige">&hellip;</span></td>');
         
         $('#leaderboardRanking').css({
             textAlign: 'center',
@@ -124,8 +124,14 @@
         });
         
         $('#leaderboardRanking span').hover(
-            function () { $(this).css('background-color', '#8b8'); },
-            function () { $(this).css('background-color', ''); }
+            function () {
+                $(this).css('background-color', '#8b8');
+                $('#leaderboardRanking b').text($(this).data('order'));
+            },
+            function () {
+                $(this).css('background-color', '');
+                $('#leaderboardRanking b').text('Ranking');
+            }
         );
 
         $('span.mainRank').click(function () {
