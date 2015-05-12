@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         A Mining Game: Fix minor issues
 // @namespace    https://github.com/Phylogenesis/
-// @version      0.2.2
+// @version      0.2.3
 // @description  Fixes some minor issues with the chat system and allows manual saving by clicking on the button in the top right
 // @author       Luke Jones
 // @include      /^http://trugul\.com/(index\.php)?$/
@@ -116,6 +116,11 @@
         $('span.prestigeRank').css({
             borderBottomRightRadius: '5px'
         });
+        
+        $('#leaderboardRanking span').hover(
+            function () { $(this).css('background-color', '#8b8'); },
+            function () { $(this).css('background-color', ''); }
+        );
 
         $('span.mainRank').click(function () {
             window.open('http://trugul.com/highscores/?user=' + AGame.username)
