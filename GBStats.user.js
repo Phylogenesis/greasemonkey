@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         A Mining Game: GBStats Bot
 // @namespace    https://github.com/Phylogenesis/
-// @version      0.1.7
+// @version      0.1.8
 // @description  Runs a bot that tracks global boss stats in A Mining Game
 // @author       Luke Jones
 // @include      /^http://trugul\.com/(index\.php)?$/
@@ -56,9 +56,10 @@ GBStats = {
                     }
                 }
                 
-                if (!found) {
-                    GBStats.sendToPrivateChat(personalSubscribers[i], 'You did not take part in the last global boss.');
-                }
+                // Removed because Dragory is a diva
+                //if (!found) {
+                //    GBStats.sendToPrivateChat(personalSubscribers[i], 'You did not take part in the last global boss.');
+                //}
             }
         }
         GBStats.sendToSubscribers('personal', 'Type "#gbstats unsubscribe personal" to unsubscribe from these messages');
