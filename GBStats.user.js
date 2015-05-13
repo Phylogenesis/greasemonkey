@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         A Mining Game: GBStats Bot
 // @namespace    https://github.com/Phylogenesis/
-// @version      0.1.6
+// @version      0.1.7
 // @description  Runs a bot that tracks global boss stats in A Mining Game
 // @author       Luke Jones
 // @include      /^http://trugul\.com/(index\.php)?$/
@@ -12,14 +12,17 @@
 GBStats = {
     // How many global bosses to track.
     // Maximum limit depends on the browser's localStorage settings
-    MAX_HISTORY:  1000,      
+    MAX_HISTORY:   1000,
     
-    client:       undefined,
+    // How many people to report in the summary messages.
+    SUMMARY_COUNT: 5,
     
-    globalBosses: [],
-    playerList:   [],
+    client:        undefined,
     
-    subscribers:  {
+    globalBosses:  [],
+    playerList:    [],
+    
+    subscribers:   {
         summary:  [],
         personal: []
     },
@@ -88,22 +91,26 @@ GBStats = {
         }
 
         attackers.sort(function (a, b) { return b.attacks - a.attacks; });
-
-        message =
-            'Top Clickers: ' +
-            attackers[0].username + ' (' + attackers[0].attacks + ', ' + (attackers[0].attacks / bossDuration).toFixed(1) + '/s), ' + 
-            attackers[1].username + ' (' + attackers[1].attacks + ', ' + (attackers[1].attacks / bossDuration).toFixed(1) + '/s), ' + 
-            attackers[2].username + ' (' + attackers[2].attacks + ', ' + (attackers[2].attacks / bossDuration).toFixed(1) + '/s)';
+        
+        var topClickers = attackers.slice(0, GBStats.SUMMARY_COUNT).map(
+            function (attacker) {
+                return attacker.username + ' (' + attacker.attacks + ', ' + (attacker.attacks / bossDuration).toFixed(1) + '/s)';
+            }
+        );
+                
+        message = 'Top Clickers: ' + topClickers.join(', ');
 
         outputFunction(message);
 
         attackers.sort(function (a, b) { return b.damageDealt - a.damageDealt; });
 
-        message =
-            'Top Damage: ' +
-            attackers[0].username + ' (' + attackers[0].damageDealt + ', ' + (attackers[0].damageDealt / bossHP * 100).toFixed(1) + '%), ' + 
-            attackers[1].username + ' (' + attackers[1].damageDealt + ', ' + (attackers[1].damageDealt / bossHP * 100).toFixed(1) + '%), ' + 
-            attackers[2].username + ' (' + attackers[2].damageDealt + ', ' + (attackers[2].damageDealt / bossHP * 100).toFixed(1) + '%)';
+        var topDamage = attackers.slice(0, GBStats.SUMMARY_COUNT).map(
+            function (attacker) {
+                return attacker.username + ' (' + attacker.damageDealt + ', ' + (attacker.damageDealt / bossHP * 100).toFixed(1) + '%)';
+            }
+        );
+                
+        message = 'Top Damage: ' + topDamage.join(', ');
 
         outputFunction(message);
     },
