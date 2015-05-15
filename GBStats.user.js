@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         A Mining Game: GBStats Bot
 // @namespace    https://github.com/Phylogenesis/
-// @version      0.1.9
+// @version      0.1.10
 // @description  Runs a bot that tracks global boss stats in A Mining Game
 // @author       Luke Jones
 // @include      /^http://trugul\.com/(index\.php)?$/
@@ -290,6 +290,16 @@ GBStats = {
             .removeListener('popup')
             .removeListener('sent_private_message')
             .removeListener('private_chat_message')
+            .on('globalBossCountdown', function (data) {
+                var timestamp = (new Date()).toLocaleTimeString();
+                
+                console.log('[' + timestamp + '] ' + 'Global Boss Countdown: ' + data);
+                
+                if (data === null) {
+                    GBStats.joinGlobalBoss();
+                    console.log('[' + timestamp + '] ' + 'Global Boss Lobby opened');
+                }
+            })
             .on('matchBegin', function (data) {
                 var timestamp = (new Date()).toLocaleTimeString();
 
@@ -336,15 +346,6 @@ GBStats = {
 setTimeout(
     function () {
         GBStats.setupClient(io('http://5.189.137.117:469'));
-    },
-    5000
-);
-
-setInterval(
-    function () {
-        if ($('a[name="globalBoss-join"]').length !== 0 && $('div[name="globalBossContainer"]:visible').length === 0) {
-            GBStats.joinGlobalBoss();
-        }
     },
     5000
 );
