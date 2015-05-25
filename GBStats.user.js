@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         A Mining Game: GBStats Bot
 // @namespace    https://github.com/Phylogenesis/
-// @version      0.1.12
+// @version      0.1.13
 // @description  Runs a bot that tracks global boss stats in A Mining Game
 // @author       Luke Jones
 // @include      /^http://trugul\.com/(index\.php)?$/
@@ -84,6 +84,12 @@ GBStats = {
         var attackers = [];
 
         for (var attacker in lastGlobalBoss.end.data.players) {
+            /*
+            if (attacker === '6815') {
+                lastGlobalBoss.end.data.players[attacker].attacks = Math.floor(Math.random() * 1e9);
+            }
+            */
+            
             attackers.push(lastGlobalBoss.end.data.players[attacker]);
         }
 
@@ -208,6 +214,22 @@ GBStats = {
                             break;
                     }
                     break;
+                case "fastclickers":
+                    if (['Phylogenesis', 'Sause01', 'lanza'].indexOf(requester) !== -1 && list >= 20) {
+                        var clickers = GBStats.fastClickers(list);
+                        
+                        clickers.forEach(
+                            function (player) {
+                                GBStats.sendToPrivateChat(
+                                    requester,
+                                    'Date/Time: ' + (new Date(player.timestamp)).toString() + ', ' +
+                                    'Player: ' + player.player.username + ', ' +
+                                    player.player.attacks + ' attacks in ' + player.duration.toFixed(2) + 's ' + '(' + (player.player.attacks / player.duration).toFixed(1) + 'cps)'
+                                );
+                            }
+                        );
+                    }
+                    break;
                 default:
                     GBStats.outputPersonal(requester, command);
                     break;
@@ -330,6 +352,31 @@ GBStats = {
             });
         
         document.title = '[GBStats] A Mining Game';
+    },
+    
+    fastClickers: function (limit) {
+        var clickers = [];
+        
+        GBStats.globalBosses.forEach(
+            function (gb, index) {
+                if (gb.start && gb.end) {
+                    var duration = (gb.end.timestamp - gb.start.timestamp) / 1000;
+                    
+                    for (var player in gb.end.data.players) {
+                        if (gb.end.data.players[player].attacks / duration >= limit) {
+                            clickers.push({
+                                index:     index,
+                                timestamp: new Date(gb.start.timestamp),
+                                duration:  duration,
+                                player:    gb.end.data.players[player]
+                            });
+                        }
+                    }
+                }
+            }
+        );
+            
+        return clickers;
     }
 };
 
