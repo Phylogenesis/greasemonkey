@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         A Mining Game: Fix minor issues
 // @namespace    https://github.com/Phylogenesis/
-// @version      0.2.5
+// @version      0.3
 // @description  Fixes some minor issues with the chat system and allows manual saving by clicking on the button in the top right
 // @author       Luke Jones
 // @include      /^http://trugul\.com/(index\.php)?$/
@@ -48,6 +48,141 @@
         });
     };
     
+    function addSellValueDiv() {
+        $('body').append('<div id="sellValue" />');
+        
+        $('#sellValue').append('<div id="sellValueTotal" class="clickable visible">Total Sell Value<span></span></div>');
+        
+        $('#sellValue').append('<div id="sellValueScientists" data-parent="sellValueTotal">Scientists<span></span></div>');
+        
+        $('#sellValue').append('<div id="sellValueSoldiers" class="clickable" data-parent="sellValueTotal">Army<span></span></div>');
+        
+        for (var soldier in items.soldiers) {
+            $('#sellValue').append('<div id="sellValueSoldiers' + soldier + '" data-parent="sellValueSoldiers">' + items.soldiers[soldier].name + '<span></span></div>');
+        }
+        
+        $('#sellValue').append('<div id="sellValueVillage" class="clickable" data-parent="sellValueTotal">Village<span></span></div>');
+        
+        for (var building in buildings) {
+            $('#sellValue').append('<div id="sellValueVillage' + building + '" data-parent="sellValueVillage">' + buildings[building].name + '<span></span></div>');
+        }
+        
+        $('#sellValue').css({
+            position:   'fixed',
+            color:      '#666',
+            top:        '62px',
+            left:       '10px',
+            width:      '200px',
+            zIndex:     9999999
+        });
+        
+        $('#sellValue div').css({
+            border:     '1px solid #666',
+            marginTop:  '-1px',
+            marginLeft: '0px',
+            background: '#ddd',
+            height:     '30px',
+            lineHeight: '30px',
+            padding:    '0 10px'
+        });
+        
+        $('#sellValue span').css('float', 'right');
+        $('#sellValue div.clickable').css('cursor', 'pointer');
+        
+        $('#sellValue').on(
+            'selectstart',
+            function (e) {
+                e.preventDefault();
+            }
+        );
+        
+        $('head').append('<style type="text/css">#sellValue div { display: none; }</style>');
+        $('head').append('<style type="text/css">#sellValue div.visible { display: block; }</style>');
+        
+        $('div.clickable').click(function (e) {
+            var id = this.id;
+            
+            $('#sellValue div').each(function (index, div) {
+                if ($(div).data('parent') === id) {
+                    $(div).toggleClass('visible');
+                }
+            });
+        });
+        
+        $('#sellValue div').each(function (index, div) {
+            var parentMargin = parseInt($('#' + $(div).data('parent')).css('margin-left'), 10);
+            
+            $(div).css('margin-left', (parentMargin + 10) + 'px');
+        });
+    };
+    
+    function prettifyNumber(value) {
+        var divisors = {
+            Qi: 1e18,
+            Qa: 1e15,
+            T:  1e12,
+            B:  1e9,
+            M:  1e6,
+            K:  1e3
+        };
+        
+        for (var divisor in divisors) {
+            if (value >= divisors[divisor]) {
+                value /= divisors[divisor];
+                return value.toFixed(1) + divisor;
+            }
+        }
+        
+        return value;
+    }
+    
+    function calculateSellValue(data) {
+        var scientistsTotal = 0;
+        var baseValue       = 1000000;
+        var multiplier      = 1.0005;
+        for (var i = 0; i < game.scientists; i++) {
+            scientistsTotal += (baseValue * Math.pow(multiplier, i));
+        }
+        $('#sellValueScientists span').text('$' + prettifyNumber(scientistsTotal / 4));
+        
+        var soldiersTotal = 0;
+        for (var soldier in items.soldiers) {
+            var div          = $('#sellValueSoldiers' + soldier);
+            var soldierValue = items.soldiers[soldier].sell * data.employedSoldiers[soldier];
+            
+            soldiersTotal += soldierValue;
+            
+            div.find('span').text('$' + prettifyNumber(soldierValue));
+        }
+        $('#sellValueSoldiers span').text('$' + prettifyNumber(soldiersTotal));
+        
+        var villageTotal = 0;
+        for (var building in buildings) {
+            var div           = $('#sellValueVillage' + building);
+            var buildingValue = 0;
+            
+            if (data.village.formed) {
+                var baseValue  = buildings[building].price;
+                var multiplier = 1.2;
+                
+                for (var i = 0; i < data.village.buildings[building]; i++)
+                {
+                    buildingValue += baseValue * Math.pow(multiplier, i);
+                }
+                
+                buildingValue /= 2;
+                buildingValue *= data.village.setup.gov === 'democracy' ? 0.8 : 1;
+                
+                villageTotal += buildingValue;
+            }
+            
+            div.find('span').text('$' + prettifyNumber(buildingValue));
+        }
+        $('#sellValueVillage span').text('$' + prettifyNumber(villageTotal));
+
+        $('#sellValueTotal span').text('$' + prettifyNumber(scientistsTotal + soldiersTotal + villageTotal));
+    };
+    
     $(document).on(
         'click',
         'div.tabs a',
@@ -91,6 +226,8 @@
                     AGame.lastSubmit = lastSubmit;
                     updateRanks();
                 }
+                
+                calculateSellValue(data.gameVars);
             }
         );
         
@@ -141,6 +278,7 @@
         $('span.prestigeRank').click(function () {
             window.open('http://trugul.com/highscores/?order=prestige&user=' + AGame.username)
         });
+        
+        addSellValueDiv();
     }, 5000);
 })(jQuery);
-    
