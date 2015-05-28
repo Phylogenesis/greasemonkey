@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         A Mining Game: Fix minor issues
 // @namespace    https://github.com/Phylogenesis/
-// @version      0.3
+// @version      0.3.1
 // @description  Fixes some minor issues with the chat system and allows manual saving by clicking on the button in the top right
 // @author       Luke Jones
 // @include      /^http://trugul\.com/(index\.php)?$/
@@ -143,8 +143,9 @@
         for (var i = 0; i < game.scientists; i++) {
             scientistsTotal += (baseValue * Math.pow(multiplier, i));
         }
-        $('#sellValueScientists span').text('$' + prettifyNumber(scientistsTotal / 4));
-        
+        scientistsTotal /= 4;
+        $('#sellValueScientists span').text('$' + prettifyNumber(scientistsTotal));
+
         var soldiersTotal = 0;
         for (var soldier in items.soldiers) {
             var div          = $('#sellValueSoldiers' + soldier);
