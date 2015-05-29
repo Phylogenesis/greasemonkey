@@ -4,7 +4,7 @@
 // @version      0.3.3
 // @description  Fixes some minor issues with the chat system, allows manual saving by clicking on the button in the top right, adds leaderboard ranking and total sell value information
 // @author       Luke Jones
-// @include      /^http://trugul\.com/(index\.php)?#?$/
+// @include      /^http://(www\.)?trugul\.com/(index\.php)?#?$/
 // @grant        none
 // @downloadURL  https://github.com/Phylogenesis/greasemonkey/raw/master/AMGFixes.user.js
 // ==/UserScript==
