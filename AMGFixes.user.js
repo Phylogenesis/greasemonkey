@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         A Mining Game: Fix minor issues
 // @namespace    https://github.com/Phylogenesis/
-// @version      0.3.1
+// @version      0.3.2
 // @description  Fixes some minor issues with the chat system and allows manual saving by clicking on the button in the top right
 // @author       Luke Jones
 // @include      /^http://trugul\.com/(index\.php)?$/
@@ -172,8 +172,7 @@
                 }
                 
                 buildingValue /= 2;
-                buildingValue *= data.village.setup.gov === 'democracy' ? 0.8 : 1;
-                
+
                 villageTotal += buildingValue;
             }
             
