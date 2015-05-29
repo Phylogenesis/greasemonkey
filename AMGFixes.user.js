@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         A Mining Game: Chat Fixes and UI Improvements
 // @namespace    https://github.com/Phylogenesis/
-// @version      0.3.3
+// @version      0.3.4
 // @description  Fixes some minor issues with the chat system, allows manual saving by clicking on the button in the top right, adds leaderboard ranking and total sell value information
 // @author       Luke Jones
 // @include      /^http://(www\.)?trugul\.com/(index\.php)?#?$/
