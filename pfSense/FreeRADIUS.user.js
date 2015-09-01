@@ -4,7 +4,7 @@
 // @include     https://localhost/pkg.php?xml=freeradius.xml
 // @include     https://kemfxtfw02/pkg.php?xml=freeradius.xml
 // @include     https://kemfxtfw02.kemball.co.uk/pkg.php?xml=freeradius.xml
-// @version     1.02
+// @version     1.03
 // @grant       none
 // @require     https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js
 // ==/UserScript==
@@ -18,7 +18,7 @@ function addNewUserButton() {
         .html('<p style="margin-top: 4px;">New User</p>')
         .css({
             position:   'absolute',
-            top:        '55px',
+            top:        '50px',
             border:     '1px solid #ccc',
             background: '#eee',
             padding:    '5px',
