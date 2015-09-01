@@ -4,7 +4,7 @@
 // @include     https://localhost/pkg.php?xml=freeradius.xml
 // @include     https://kemfxtfw02/pkg.php?xml=freeradius.xml
 // @include     https://kemfxtfw02.kemball.co.uk/pkg.php?xml=freeradius.xml
-// @version     1.01
+// @version     1.02
 // @grant       none
 // @require     https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js
 // ==/UserScript==
@@ -29,8 +29,11 @@ function addNewUserButton() {
         .click(function () {
             $(this)
                 .html('<table><tr><td>First: </td><td><input id="addUserFirst" type="text" size="6" /></td><td>Last: </td><td><input id="addUserLast" type="text" size="6" /></td><td>Password: </td><td><input id="addUserPassword" type="password" size="5" /></td></tr></table>')
-                .css('left', (850 - $(this).outerWidth()) + 'px')
-                .unbind('click');
+                .css({
+                    left:   (850 - $(this).outerWidth()) + 'px',
+                    cursor: 'inherit'
+                })
+                .off('click');
             
             $('#addUserFirst').focus();
             
@@ -42,6 +45,10 @@ function addNewUserButton() {
                         var password = $('#addUserPassword').val();
                         
                         if (first !== '' && last !== '' && password !== '') {
+                            $('#addUserFirst').prop('disabled', true);
+                            $('#addUserLast').prop('disabled', true);
+                            $('#addUserPassword').prop('disabled', true);
+                            
                             addUser(first, last, password);
                         }
                     }
