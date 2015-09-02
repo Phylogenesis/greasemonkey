@@ -7,6 +7,7 @@
 // @version     1.03
 // @grant       none
 // @require     https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js
+// @downloadURL https://github.com/Phylogenesis/greasemonkey/raw/master/pfSense/FreeRADIUS.user.js
 // ==/UserScript==
 
 var $ = jQuery.noConflict(true);
