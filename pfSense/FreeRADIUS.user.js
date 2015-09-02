@@ -4,7 +4,7 @@
 // @include     https://localhost/pkg.php?xml=freeradius.xml
 // @include     https://kemfxtfw02/pkg.php?xml=freeradius.xml
 // @include     https://kemfxtfw02.kemball.co.uk/pkg.php?xml=freeradius.xml
-// @version     1.03
+// @version     1.04
 // @grant       none
 // @require     https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js
 // @downloadURL https://github.com/Phylogenesis/greasemonkey/raw/master/pfSense/FreeRADIUS.user.js
