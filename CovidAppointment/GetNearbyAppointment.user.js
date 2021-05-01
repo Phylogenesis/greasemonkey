@@ -7,7 +7,7 @@
 // @match        https://www.nhs.uk/book-a-coronavirus-vaccination/book/Appointment/Index/*
 // @icon         https://www.google.com/s2/favicons?domain=www.nhs.uk
 // @grant        none
-// @downloadURL  https://github.com/Phylogenesis/greasemonkey/CovidAppointment/raw/master/GetNearbyAppointment.user.js
+// @downloadURL  https://github.com/Phylogenesis/greasemonkey/raw/master/CovidAppointment/GetNearbyAppointment.user.js
 // ==/UserScript==
 
 (function() {
