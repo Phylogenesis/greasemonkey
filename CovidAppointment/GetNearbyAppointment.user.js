@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Get Nearby COVID Appointment
 // @namespace    http://www.github.com/Phylogenesis/
-// @version      0.1
+// @version      0.1.1
 // @description  Refreshes appointment screen every 10 seconds until a nearby appointment shows up (<=20 miles). Then plays a sound every 5 seconds so that the user is alerted.
 // @author       Luke Jones
 // @match        https://www.nhs.uk/book-a-coronavirus-vaccination/book/Appointment/Index/*
